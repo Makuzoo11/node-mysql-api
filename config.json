@@ -1,0 +1,19 @@
+{
+  "database": {
+    "host": "localhost",
+    "port": 3306,
+    "user": "dev",
+    "password": "1234",
+    "database": "node_mysql_api"
+  },
+  "secret": "SUPER_SECRET_KEY_REPLACE_ME_IN_PRODUCTION",
+  "emailFrom": "info@my-node-api.com",
+  "smtpOptions": {
+    "host": "smtp.ethereal.email",
+    "port": 587,
+    "auth": {
+      "user": "weldon.pouros@ethereal.email",
+      "pass": "tz6ZPVuTvx3VJu9gnY"
+    }
+  }
+}
