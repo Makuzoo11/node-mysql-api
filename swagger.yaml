@@ -7,7 +7,7 @@ info:
 
 servers:
   - url: https://node-mysql-api-production-347a.up.railway.app
-   description: Local development server
+    description: Production servers
 
 
 paths:
