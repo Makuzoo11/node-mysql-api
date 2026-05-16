@@ -223,7 +223,9 @@ async function sendVerificationEmail(account: any, origin: any) {
         message = `<p>Please use the below token to verify your email address with the <code>/account/verify-email</code> api route:</p>
                    <p><code>${account.verificationToken}</code></p>`;
     }
-
+        console.log('SENDING EMAIL TO:', account.email);
+        console.log('ORIGIN:', origin);
+        
     await sendEmail({
         to: account.email,
         subject: 'Sign-up Verification API - Verify Email',
