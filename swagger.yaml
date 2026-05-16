@@ -5,8 +5,7 @@ info:
  version: 1.0.0
 
 
-servers:
-  - url: https://node-mysql-api-production-347a.up.railway.app
+servers:  - url: node-mysql-api-production-347a.up.railway.app
     description: Production servers
 
 
