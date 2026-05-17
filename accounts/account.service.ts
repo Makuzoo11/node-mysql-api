@@ -83,7 +83,7 @@ async function register(params: any, origin: any) {
 
     await account.save();
 
-    await sendVerificationEmail(account, origin);
+    sendVerificationEmail(account, origin);
 }
 
 async function verifyEmail({ token }: any) {
@@ -104,7 +104,7 @@ async function forgotPassword({ email }: any, origin: any) {
     account.resetTokenExpires = new Date(Date.now() + 24*60*60*1000);
     await account.save();
 
-    await sendPasswordResetEmail(account, origin);
+    sendPasswordResetEmail(account, origin);
 }
 
 async function validateResetToken({ token }: any) {
