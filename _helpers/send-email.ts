@@ -16,7 +16,9 @@ export default async function sendEmail({ to, subject, html }: any) {
                 },
                 to: [{ email: to }],
                 subject,
-                htmlContent: html
+                htmlContent: html,
+                trackClicks: false,
+                trackOpens: false
             })
         });
 
