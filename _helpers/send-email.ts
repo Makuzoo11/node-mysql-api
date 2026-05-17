@@ -11,8 +11,8 @@ export default async function sendEmail({ to, subject, html }: any) {
             },
             body: JSON.stringify({
                 sender: { 
-                    name: 'Mark Remitar', 
-                    email: 'ab7f85001@smtp-brevo.com'
+                    name: 'Mark Go Remitar', 
+                    email: 'remitarponce@gmail.com'
                 },
                 to: [{ email: to }],
                 subject,
