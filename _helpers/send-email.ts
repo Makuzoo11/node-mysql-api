@@ -1,32 +1,27 @@
-import nodemailer from 'nodemailer';
-
 export default async function sendEmail({ to, subject, html }: any) {
     try {
-        console.log('SMTP HOST:', process.env.SMTP_HOST);
-        console.log('SMTP USER:', process.env.SMTP_USER);
-        console.log('SMTP PORT:', process.env.SMTP_PORT);
-
-        const transporter = nodemailer.createTransport({
-            host: process.env.SMTP_HOST,
-            port: Number(process.env.SMTP_PORT),
-            secure: false,
-            auth: {
-                user: process.env.SMTP_USER,
-                pass: process.env.SMTP_PASS
+        console.log('Sending email via Brevo API to:', to);
+        
+        const response = await fetch('https://api.brevo.com/v3/smtp/email', {
+            method: 'POST',
+            headers: {
+                'accept': 'application/json',
+                'api-key': process.env.BREVO_API_KEY!,
+                'content-type': 'application/json'
             },
-            connectionTimeout: 10000,
-            greetingTimeout: 10000,
-            socketTimeout: 10000
+            body: JSON.stringify({
+                sender: { 
+                    name: 'Mark Remitar', 
+                    email: 'ab7f85001@smtp-brevo.com'
+                },
+                to: [{ email: to }],
+                subject,
+                htmlContent: html
+            })
         });
 
-        const info = await transporter.sendMail({
-            from: `"Mark Remitar" <${process.env.SMTP_USER}>`,
-            to,
-            subject,
-            html
-        });
-
-        console.log('EMAIL SENT:', info.messageId);
+        const data = await response.json();
+        console.log('EMAIL RESPONSE:', JSON.stringify(data));
 
     } catch (error) {
         console.log('EMAIL ERROR:', error);

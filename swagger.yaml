@@ -8,7 +8,6 @@ info:
 servers:  - url: https://node-mysql-api-production-347a.up.railway.app
     description: Production servers
 
-
 paths:
  /accounts/authenticate:
    post:
