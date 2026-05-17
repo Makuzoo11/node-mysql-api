@@ -192,7 +192,7 @@ async function hash(password: any) {
 }
 
 function generateJwtToken(account: any) {
-    return jwt.sign({ sub: account.id, id: account.id }, config.secret, { expiresIn: '15m' });
+    return jwt.sign({ sub: account.id, id: account.id }, process.env.JWT_SECRET || config.secret, { expiresIn: '15m' });
 }
 
 function generateRefreshToken(account: any, ipAddress: any) {
@@ -214,24 +214,21 @@ function basicDetails(account: any) {
 }
 
 async function sendVerificationEmail(account: any, origin: any) {
+    const baseUrl = origin || process.env.FRONTEND_URL;
     let message;
-    if (origin) {
-        const verifyUrl = `${origin}/account/verify-email?token=${account.verificationToken}`;
+    if (baseUrl) {
+        const verifyUrl = `${baseUrl}/account/verify-email?token=${account.verificationToken}`;
         message = `<p>Please click the below link to verify your email address:</p>
                    <p><a href="${verifyUrl}">${verifyUrl}</a></p>`;
     } else {
-        message = `<p>Please use the below token to verify your email address with the <code>/account/verify-email</code> api route:</p>
-                   <p><code>${account.verificationToken}</code></p>`;
+        message = `<p>Your verification token is: <code>${account.verificationToken}</code></p>`;
     }
-        console.log('SENDING EMAIL TO:', account.email);
-        console.log('ORIGIN:', origin);
-        
+    console.log('SENDING EMAIL TO:', account.email);
+    console.log('ORIGIN:', baseUrl);
     await sendEmail({
         to: account.email,
         subject: 'Sign-up Verification API - Verify Email',
-        html: `<h4>Verify Email</h4>
-               <p>Thanks for registering!</p>
-               ${message}`
+        html: `<h4>Verify Email</h4><p>Thanks for registering!</p>${message}`
     });
 }
 
@@ -253,20 +250,18 @@ async function sendAlreadyRegisteredEmail(email: any, origin: any) {
 }
 
 async function sendPasswordResetEmail(account: any, origin: any) {
+    const baseUrl = origin || process.env.FRONTEND_URL;
     let message;
-    if (origin) {
-        const resetUrl = `${origin}/account/reset-password?token=${account.resetToken}`;
-        message = `<p>Please click the below link to reset your password, the link will be valid for 1 day:</p>
+    if (baseUrl) {
+        const resetUrl = `${baseUrl}/account/reset-password?token=${account.resetToken}`;
+        message = `<p>Please click the below link to reset your password:</p>
                    <p><a href="${resetUrl}">${resetUrl}</a></p>`;
     } else {
-        message = `<p>Please use the below token to reset your password with the <code>/account/reset-password</code> api route:</p>
-                   <p><code>${account.resetToken}</code></p>`;
+        message = `<p>Your reset token is: <code>${account.resetToken}</code></p>`;
     }
-
     await sendEmail({
         to: account.email,
         subject: 'Sign-up Verification API - Reset Password',
-        html: `<h4>Reset Password Email</h4>
-               ${message}`
+        html: `<h4>Reset Password Email</h4>${message}`
     });
 }
