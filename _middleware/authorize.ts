@@ -2,7 +2,7 @@ import { expressjwt } from 'express-jwt';
 import config from '../config.json';
 import db from '../_helpers/db';
 
-const { secret } = config;
+const secret = (process.env.JWT_SECRET || config.secret) as string;
 
 export default authorize;
 
