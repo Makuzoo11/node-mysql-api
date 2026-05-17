@@ -250,7 +250,8 @@ async function sendAlreadyRegisteredEmail(email: any, origin: any) {
 }
 
 async function sendPasswordResetEmail(account: any, origin: any) {
-    const baseUrl = origin || process.env.FRONTEND_URL;
+    const baseUrl = process.env.FRONTEND_URL || origin;
+const resetUrl = `${baseUrl}/account/reset-password?token=${account.resetToken}`;
     let message;
     if (baseUrl) {
         const resetUrl = `${baseUrl}/account/reset-password?token=${account.resetToken}`;
